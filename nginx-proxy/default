@@ -1,0 +1,11 @@
+server {
+	listen 80 default_server;
+	server_name _;
+
+	location / {
+		#return 301 https://gonservice.com.br;
+		return 301 https://youtu.be/CM_A4f9qqzo?t=3;
+	}
+
+}
+

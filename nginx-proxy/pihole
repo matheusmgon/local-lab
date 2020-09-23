@@ -1,0 +1,25 @@
+server {
+	listen 80;
+	server_name pihole.home.gonservice.com.br;
+	location / {
+		return 301 https://pihole.home.gonservice.com.br;
+	}
+#	rewrite ^(.*) https://$host$1 permanent;
+}
+ 
+server {
+	listen 443;
+	server_name pihole.home.gonservice.com.br;
+	ssl_certificate /etc/letsencrypt/live/pi-hole.home.gonservice.com.br/fullchain.pem; # managed by Certbot
+	ssl_certificate_key /etc/letsencrypt/live/pi-hole.home.gonservice.com.br/privkey.pem; # managed by Certbot
+#	proxy_redirect off;
+	
+	location / {
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_pass http://30.1.0.253;
+	}
+
+
+}
